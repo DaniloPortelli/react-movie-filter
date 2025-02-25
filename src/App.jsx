@@ -5,17 +5,18 @@
 // Il filtro deve funzionare dinamicamente quando l'utente seleziona un genere dalla select.
 // Se non viene selezionato alcun genere, devono essere mostrati tutti i film.
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import film from '../data/film'
 
 function App() {
 
- //Destrutturizzazione di useState: "movies"= array "film", 
- // setMovies= funzione che mi permette di cambiare il valore di "movies"
+  //Destrutturizzazione di useState: "movies"= array "film", 
+  // setMovies= funzione che mi permette di cambiare il valore di "movies"
   const [movies, setMovies] = useState(film)
-
-
   const [newMovie, setNewMovie] = useState("")
+
+  const [search, setSearch] = useState("")
+  const [filteredMovies, setFilteredeMovies] = useState(movies)
 
 
   //Funzione da applicare a "onSubmit" che mi permette di impostare la logica di "setMovies"
@@ -28,13 +29,32 @@ function App() {
     setNewMovie("")
   }
 
+  useEffect(() => {
+    setFilteredeMovies(
+      movies.filter(movie => {
+        return movie.toLowerCase().includes(search.toLowerCase())
+      })
+    )
+
+  })
+
   return (
     <>
       <div>
         <h1>Elenco movies</h1>
+        <div>
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+
+
+
         <ul>
           {
-            movies.map((movie, indice) => {
+            filteredMovies.map((movie, indice) => {
 
               return (
                 <li key={indice}>{movie}</li>
@@ -62,4 +82,4 @@ function App() {
 
 export default App
 
- 
+
