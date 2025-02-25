@@ -32,7 +32,7 @@ function App() {
   useEffect(() => {
     setFilteredeMovies(
       movies.filter(movie => {
-        return movie.toLowerCase().includes(search.toLowerCase())
+        return movie.genre.toLowerCase().includes(search.toLowerCase())
       })
     )
 
@@ -57,7 +57,7 @@ function App() {
             filteredMovies.map((movie, indice) => {
 
               return (
-                <li key={indice}>{movie}</li>
+                <li key={indice}>{movie.title}</li>
               )
             })
           }
